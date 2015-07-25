@@ -37,6 +37,11 @@ namespace App1
             if (m_Gpio == null)
             {
                 m_GpioStatus.Text = "There is no GPIO controller on this device.";
+                DispatcherTimer t2 = new DispatcherTimer();
+                t2.Interval = TimeSpan.FromSeconds(2);
+                t2.Tick += onTelemetryTimer;
+                t2.Start();
+
                 return;
             }
 
@@ -56,6 +61,16 @@ namespace App1
             {
                 doIt(null, null);
             });
+        }
+
+        private void onTelemetryTimer(object sender, object e)
+        {
+            postTelemetryDataToCloud();
+        }
+
+        private async void postTelemetryDataToCloud()
+        {
+            await sendTelemetryData();
         }
 
         private void onTimer(object sender, object e)
@@ -98,10 +113,11 @@ namespace App1
             }            
         }
 
+        
         private async Task sendTelemetryData()
         {
-            var tokenProvider = new SASTokenProvider("send_receive", "bADkRExvoXjw7t81Ln/MGRd2u6mHYMVjUV4+zEInz+4=");
-            var sendClient = new QueueClient("factorybh", "ingress", tokenProvider, "http");
+            var tokenProvider = new SASTokenProvider("SASKEYNAME", "SASKEY");
+            var sendClient = new QueueClient("NAMESPACE", "QUEUENAME", tokenProvider, "http");
 
             try
             {
@@ -111,7 +127,7 @@ namespace App1
                         DeviceId = "TEMPPi007",
                         Id = "102928",
                         DeviceName = "Pi Temperature Sensor",
-                        Temperature = DateTime.Now.Second,
+                        Temperature = getTemperature(),
                         Timestamp = DateTime.Now.ToString(),
                     })
                 {
@@ -125,6 +141,16 @@ namespace App1
             {
 
             }
+        }
+        private Random m_Rnd = new Random();
+
+
+
+        private double getTemperature()
+        {
+            double[] t = new double[] { 21.2, 20.9, 20.8, 21.0, 21.1 };
+            
+            return t[m_Rnd.Next(4)];
         }
     }
 }

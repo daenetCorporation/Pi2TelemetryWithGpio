@@ -107,6 +107,7 @@
     <None Include="App1_TemporaryKey.pfx" />
     <None Include="ApplicationInsights.config" />
     <None Include="packages.config" />
+    <None Include="PI2Scripts.ps1" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assemblies\SbOpenSdk\IotHub.Http.dll" />
