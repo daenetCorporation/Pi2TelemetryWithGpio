@@ -116,8 +116,8 @@ namespace App1
         
         private async Task sendTelemetryData()
         {
-            var tokenProvider = new SASTokenProvider("SASKEYNAME", "SASKEY");
-            var sendClient = new QueueClient("NAMESPACE", "QUEUENAME", tokenProvider, "http");
+            var tokenProvider = new SASTokenProvider("iottests", "/nBiSXr/adsyG7zF4m91OGHCP3DTvQQj0e6f4OSIDog=");
+            var sendClient = new QueueClient("iotlab", "samplequeue", tokenProvider, "http");
 
             try
             {

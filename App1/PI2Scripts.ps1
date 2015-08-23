@@ -10,4 +10,4 @@ Set-Item WSMan:\localhost\Client\TrustedHosts -Value 192.168.178.71
 
 Enter-pssession -ComputerName  192.168.178.71 -Credential Administrator 
 
-#PWD: p@ssw0rd
+#PWD: p@ssw0rd:):):)
